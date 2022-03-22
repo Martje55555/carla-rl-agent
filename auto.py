@@ -49,6 +49,7 @@ def startCarla():
 
 def startPy():
     print("Starting Python Script")
+    
     try:
         subprocess.check_call(['python', 'main.py'],
                               stdout=sys.stdout, stderr=subprocess.STDOUT)
