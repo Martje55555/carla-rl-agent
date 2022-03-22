@@ -1,82 +1,73 @@
 import os
-import signal
 import time
 import sys
 import subprocess
+
+cmd = 'C:\\CARLA\\CARLA_0.9.13\\WindowsNoEditor\\CarlaUE4.exe'
 
 def kill():
     os.system("TASKKILL /F /IM CarlaUE4-Win64-Shipping.exe")
     time.sleep(10)
     os.system("TASKKILL /F /IM pygame window.exe")
 
-def killCarla(c):
-	client = "CarlaUE4"	
-	try:
-		# iterating through each instance of the process
-		for line in os.popen("ps ax | grep " + client + " | grep -v grep"):
-			fields = line.split()
-			
-			# extracting Process ID from the output
-			pid = fields[0]
-			
-			# terminating process
-			os.kill(int(pid), signal.SIGKILL)
-		
-		print("Process Successfully terminated")
-		c = False
-	except:
-		print("Error Encountered while running script")
 
-def killPy(p):
-	name = "Python"
-	try:
-		# iterating through each instance of the process
-		for line in os.popen("ps ax | grep " + name + " | grep -v grep"):
-			fields = line.split()
-			
-			# extracting Process ID from the output
-			pid = fields[0]
-			
-			# terminating process
-			os.kill(int(pid), signal.SIGKILL)
-		print("Process Successfully terminated")
-		p = False
-	except:
-		print("Error Encountered while running script")
+def killCarla():
+    print("I am in the kill carla function")
 
-def startCarla(c):
+    try:
+        print("doing it")
+        os.system('wmic process where name="CarlaUE4-Win64-Shipping.exe" delete')
+        return False
+    except:
+        print("not doing it")
+        print("Did not find process carla")
 
-	try:
-		DETACHED_PROCESS = 0x00000008
-		results = subprocess.Popen(['CarlaUE4.exe'],
-								close_fds=True, creationflags=DETACHED_PROCESS)
-		print(results.pid)
-		c = True
-		time.sleep(10)
-	except:
-		print("Error encountered trying to open Carla Client")
+def killPy():
+    print("I am in the kill python function")
 
-def startPy(p):
-	try:
-		subprocess.check_call(['python','main.py'], stdout=sys.stdout, stderr=subprocess.STDOUT)
-		p = True
-	except:
-		print("Error trying to run main.py script")
+    try:
+        print("doing it")
+        os.system('wmic process where name="Python" delete')
+        return False
+    except:
+        print("not doing it")
+        print("Did not find process python")
+
+def startCarla():
+    print("Starting Carla Client")
+
+    try:
+        DETACHED_PROCESS = 0x00000008
+        results = subprocess.Popen(cmd,
+                                   close_fds=True, creationflags=DETACHED_PROCESS)
+        print(results.pid)
+        return True
+
+    except:
+        print("Error encountered trying to open Carla Client")
+
+
+def startPy():
+    print("Starting Python Script")
+    try:
+        subprocess.check_call(['python', 'main.py'],
+                              stdout=sys.stdout, stderr=subprocess.STDOUT)
+        return True
+    except:
+        print("Error trying to run main.py script")
+
 
 def runningLoop():
-	c = False
-	p = False
-	while(True):
-		time.sleep(30)
-		if c == True:
-			killCarla(c)
-		if p == True:
-			killPy(p)
-		if c == False:
-			startCarla(c)
-		if p == False:
-			startPy(p)
-        #kill()
+    c = False
+    p = False
+    while(True):
+        if p or c == False:
+            c = startCarla()
+            p = startPy()
+            time.sleep(30)
+        else:
+            c = killCarla()
+            p = killPy()    
 
 
 def main():
