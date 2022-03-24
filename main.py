@@ -55,22 +55,22 @@ if __name__ == '__main__':
     # exit()
 
     # # -- STAGE-2 --
-    stage2 = learning.stage_s2(episodes=5, timesteps=512, batch_size=64, gamma=0.9999, lambda_=0.999, save_every='end',
-                               update_frequency=1, policy_lr=3e-5, value_lr=3e-5, dynamics_lr=3e-4,
-                               clip_ratio=0.15, entropy_regularization=2.0, seed_regularization=True,
-                               seed=51, polyak=1.0, aug_intensity=0.0, repeat_action=1)
-
-    stage2.run2(epochs=100, epoch_offset=0)
-    exit()
-
-    # # -- STAGE-3 --
-    # stage3 = learning.stage_s3(episodes=5, timesteps=512, batch_size=64, gamma=0.9999, lambda_=0.999, save_every='end',
+    # stage2 = learning.stage_s2(episodes=5, timesteps=512, batch_size=64, gamma=0.9999, lambda_=0.999, save_every='end',
     #                            update_frequency=1, policy_lr=3e-5, value_lr=3e-5, dynamics_lr=3e-4,
-    #                            clip_ratio=0.125, entropy_regularization=1.0, seed_regularization=True,
+    #                            clip_ratio=0.15, entropy_regularization=2.0, seed_regularization=True,
     #                            seed=51, polyak=1.0, aug_intensity=0.0, repeat_action=1)
 
-    # stage3.run2(epochs=100, epoch_offset=0)
+    # stage2.run2(epochs=100, epoch_offset=0)
     # exit()
+
+    # # -- STAGE-3 --
+    stage3 = learning.stage_s3(episodes=5, timesteps=512, batch_size=64, gamma=0.9999, lambda_=0.999, save_every='end',
+                               update_frequency=1, policy_lr=3e-5, value_lr=3e-5, dynamics_lr=3e-4,
+                               clip_ratio=0.125, entropy_regularization=1.0, seed_regularization=True,
+                               seed=51, polyak=1.0, aug_intensity=0.0, repeat_action=1)
+
+    stage3.run2(epochs=100, epoch_offset=0)
+    exit()
 
     # -- STAGE-4 --
     # stage4 = learning.stage_s4(episodes=5, timesteps=512, batch_size=64, gamma=0.9999, lambda_=0.999, save_every='end',
