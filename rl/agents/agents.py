@@ -14,7 +14,7 @@ from typing import List, Union
 # TODO: save agent configuration as json
 class Agent:
     """Agent abstract class"""
-    def __init__(self, env: Union[gym.Env, str], batch_size: int, seed=None, weights_dir='weights', name='agent',
+    def __init__(self, env: Union[gym.Env, str], batch_size: int, seed=None, weights_dir='../../weights/stage-s5-curriculum', name='agent',
                  log_mode='summary', drop_batch_remainder=False, skip_data=0, consider_obs_every=1,
                  evaluation_dir='evaluation', shuffle_batches=False, shuffle=True, traces_dir: str = None,
                  summary_keys: List[str] = None):

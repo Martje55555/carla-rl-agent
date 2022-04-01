@@ -15,7 +15,7 @@ from tensorflow.keras import losses
 from rl import utils, augmentations as aug
 from rl import PPOAgent
 from rl import PPOMemory
-from rl import ThreeCameraCARLAEnvironmentDiscrete
+from rl import OneCameraCARLAEnvironmentDiscrete
 from rl.environments.carla.tools import utils as carla_utils
 from rl.parameters import DynamicParameter
 
@@ -27,7 +27,7 @@ class FakeCARLAEnvironment(gym.Env):
 
     def __init__(self):
         super().__init__()
-        env = ThreeCameraCARLAEnvironmentDiscrete
+        env = OneCameraCARLAEnvironmentDiscrete
 
         self.action_space = env.ACTION['space']
         self.observation_space = gym.spaces.Dict(road=env.ROAD_FEATURES['space'],
@@ -196,7 +196,7 @@ class CARLAgent(PPOAgent):
                 self.env.close()
 
     def evaluate(self, name: str, timesteps: int, trials: int, seeds: Union[None, List[int]] = None,
-                 town='Town03', initial_seed=None, close=False) -> dict:
+                 town='Town10', initial_seed=None, close=False) -> dict:
         assert trials > 0
         assert timesteps > 0
 
